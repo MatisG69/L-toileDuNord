@@ -26,21 +26,21 @@ export function Services() {
   ];
 
   return (
-    <section id="services" className="py-20 bg-white/90 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4">
+    <section id="services" className="py-12 sm:py-16 md:py-20 bg-white/90 backdrop-blur-sm">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <Badge variant="secondary" className="mb-3 sm:mb-4 text-xs sm:text-sm">
             Nos Services
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2">
             Comment nous vous servons
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
             Des services adaptés à vos besoins pour une expérience d'achat optimale
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (

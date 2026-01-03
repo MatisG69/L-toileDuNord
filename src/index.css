@@ -337,4 +337,19 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+
+  /* Responsive utilities */
+  @media (max-width: 640px) {
+    .container {
+      padding-left: 0.75rem;
+      padding-right: 0.75rem;
+    }
+  }
+
+  /* Touch-friendly targets on mobile */
+  @media (max-width: 768px) {
+    button, a, input, select, textarea {
+      min-height: 44px;
+    }
+  }
 }

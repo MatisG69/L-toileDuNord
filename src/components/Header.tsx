@@ -142,11 +142,11 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
     <>
       {/* Main header - Style moderne et élégant */}
       <header className="bg-white/98 backdrop-blur-xl border-b border-gray-200/80 sticky top-0 z-50 shadow-md">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex items-center justify-between gap-4">
+        <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
+          <div className="flex items-center justify-between gap-2 sm:gap-4">
             {/* Logo - Style moderne et élégant */}
             <motion.div
-              className="flex items-center gap-3 cursor-pointer flex-shrink-0 group"
+              className="flex items-center gap-2 sm:gap-3 cursor-pointer flex-shrink-0 group"
               onClick={() => scrollToSection('accueil')}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -155,7 +155,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                 <img 
                   src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop&crop=center" 
                   alt="Logo L'Étoile du Nord - Boucherie" 
-                  className="w-14 h-14 rounded-full object-cover border-3 border-[#604e42]/30 shadow-lg group-hover:border-[#604e42]/50 transition-all duration-300 ring-2 ring-white/50"
+                  className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full object-cover border-2 sm:border-3 border-[#604e42]/30 shadow-lg group-hover:border-[#604e42]/50 transition-all duration-300 ring-2 ring-white/50"
                   onError={(e) => {
                     // Fallback si l'image ne charge pas
                     (e.target as HTMLImageElement).src = 'https://images.pexels.com/photos/361184/asparagus-steak-veal-chop-veal-361184.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop';
@@ -163,24 +163,24 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                 />
                 <div className="absolute inset-0 rounded-full bg-[#604e42]/0 group-hover:bg-[#604e42]/10 transition-all duration-300"></div>
               </div>
-              <div className="text-left">
-                <div className="text-xl md:text-2xl font-serif font-black text-gray-900 leading-tight tracking-tight group-hover:text-[#604e42] transition-colors duration-300">
+              <div className="text-left hidden xs:block">
+                <div className="text-base sm:text-lg md:text-xl lg:text-2xl font-serif font-black text-gray-900 leading-tight tracking-tight group-hover:text-[#604e42] transition-colors duration-300">
                   L'ÉTOILE DU NORD
                 </div>
-                <div className="text-xs text-[#604e42] font-semibold tracking-wide">
+                <div className="text-[10px] sm:text-xs text-[#604e42] font-semibold tracking-wide">
                   BOUCHERIE DE QUALITÉ
                 </div>
               </div>
             </motion.div>
 
             {/* Barre de recherche - Desktop - Style moderne */}
-            <div className="hidden lg:flex flex-1 max-w-lg mx-8">
+            <div className="hidden lg:flex flex-1 max-w-lg mx-4 xl:mx-8">
               <div className="relative w-full group">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 group-focus-within:text-[#604e42] transition-colors" />
+                <Search className="absolute left-3 xl:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 xl:w-5 xl:h-5 group-focus-within:text-[#604e42] transition-colors" />
                 <Input
                   type="text"
                   placeholder="Rechercher un produit..."
-                  className="pl-11 pr-4 h-11 border-2 border-gray-200 focus:border-[#604e42] rounded-xl bg-gray-50/80 focus:bg-white transition-all shadow-sm hover:shadow-md focus:shadow-lg"
+                  className="pl-9 xl:pl-11 pr-3 xl:pr-4 h-10 xl:h-11 text-sm xl:text-base border-2 border-gray-200 focus:border-[#604e42] rounded-xl bg-gray-50/80 focus:bg-white transition-all shadow-sm hover:shadow-md focus:shadow-lg"
                 />
               </div>
             </div>
@@ -211,66 +211,66 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
             </div>
 
             {/* Icons droite - Style moderne */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden lg:flex hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200"
+                className="hidden lg:flex hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200 h-9 w-9 xl:h-10 xl:w-10"
                 title="Rechercher"
               >
-                <Search className="w-5 h-5" />
+                <Search className="w-4 h-4 xl:w-5 xl:h-5" />
               </Button>
               
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={onAuthClick}
-                className="hidden md:flex hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200"
+                className="hidden sm:flex hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200 h-9 w-9 md:h-10 md:w-10"
                 title={user ? 'Mon compte' : 'Connexion'}
               >
-                {user ? <LogOut className="w-5 h-5" /> : <User className="w-5 h-5" />}
+                {user ? <LogOut className="w-4 h-4 md:w-5 md:h-5" /> : <User className="w-4 h-4 md:w-5 md:h-5" />}
               </Button>
 
               <Button
                 variant="ghost"
                 size="icon"
-                className="hidden md:flex hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200"
+                className="hidden md:flex hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200 h-9 w-9 lg:h-10 lg:w-10"
                 title="Favoris"
               >
-                <Heart className="w-5 h-5" />
+                <Heart className="w-4 h-4 lg:w-5 lg:h-5" />
               </Button>
 
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={onCartClick}
-                className="relative hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200"
+                className="relative hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all duration-200 h-9 w-9 sm:h-10 sm:w-10"
                 title="Panier"
               >
-                <ShoppingCart className="w-5 h-5" />
+                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
                 {totalItems > 0 && (
-                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs font-bold bg-[#604e42] text-white shadow-lg animate-pulse">
-                    {totalItems}
+                  <Badge className="absolute -top-0.5 -right-0.5 h-4 w-4 sm:h-5 sm:w-5 flex items-center justify-center p-0 text-[10px] sm:text-xs font-bold bg-[#604e42] text-white shadow-lg animate-pulse">
+                    {totalItems > 9 ? '9+' : totalItems}
                   </Badge>
                 )}
               </Button>
 
               {/* Menu mobile avec téléphone */}
-              <div className="md:hidden flex items-center gap-2">
+              <div className="sm:hidden flex items-center gap-1">
                 <a 
                   href="tel:+33679623942" 
-                  className="p-2 rounded-lg hover:bg-[#604e42]/10 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-[#604e42]/10 transition-colors"
                   title="Appeler"
                 >
-                  <Phone className="w-5 h-5 text-[#604e42]" />
+                  <Phone className="w-4 h-4 text-[#604e42]" />
                 </a>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all"
+                  className="hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all h-9 w-9"
                 >
-                  {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                  {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
                 </Button>
               </div>
             </div>
@@ -279,8 +279,8 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
 
         {/* Navigation horizontale - Style moderne et élégant */}
         <nav className="hidden md:block border-t border-gray-200/80 bg-white/95 backdrop-blur-sm">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-center gap-1 overflow-x-auto scrollbar-hide py-3">
+          <div className="container mx-auto px-3 sm:px-4">
+            <div className="flex items-center justify-center gap-0.5 md:gap-1 overflow-x-auto scrollbar-hide py-2 md:py-3">
               {navItems.map((item) => (
                 <div
                   key={item.id}
@@ -306,15 +306,16 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                       }
                     }}
                     className={cn(
-                      "px-5 py-2.5 text-sm font-semibold text-gray-700 hover:text-[#604e42] transition-all duration-300 flex items-center gap-1.5 whitespace-nowrap border-b-[3px] border-transparent hover:border-[#604e42] relative rounded-t-lg hover:bg-[#604e42]/5",
+                      "px-3 md:px-4 lg:px-5 py-2 md:py-2.5 text-xs md:text-sm font-semibold text-gray-700 hover:text-[#604e42] transition-all duration-300 flex items-center gap-1 md:gap-1.5 whitespace-nowrap border-b-[3px] border-transparent hover:border-[#604e42] relative rounded-t-lg hover:bg-[#604e42]/5",
                       activeNav === item.id && "text-[#604e42] border-[#604e42] bg-[#604e42]/5",
                       openDropdown === item.id && "text-[#604e42] border-[#604e42] bg-[#604e42]/5"
                     )}
                   >
-                    {item.label}
+                    <span className="hidden lg:inline">{item.label}</span>
+                    <span className="lg:hidden">{item.label.split(' ')[0]}</span>
                     {item.hasDropdown && (
                       <ChevronDown className={cn(
-                        "w-4 h-4 transition-transform duration-200",
+                        "w-3 h-3 md:w-4 md:h-4 transition-transform duration-200",
                         openDropdown === item.id && "rotate-180"
                       )} />
                     )}
@@ -368,28 +369,28 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden border-t border-gray-200 bg-white/98 backdrop-blur-sm overflow-hidden"
+              className="sm:hidden border-t border-gray-200 bg-white/98 backdrop-blur-sm overflow-hidden"
             >
-              <nav className="px-4 py-4 space-y-2">
+              <nav className="px-3 sm:px-4 py-3 sm:py-4 space-y-2 max-h-[80vh] overflow-y-auto">
                 {/* Téléphone et liens rapides dans le menu mobile */}
-                <div className="pb-4 border-b border-gray-200 space-y-2">
+                <div className="pb-3 sm:pb-4 border-b border-gray-200 space-y-2">
                   <a 
                     href="tel:+33679623942" 
-                    className="flex items-center gap-3 px-4 py-3 rounded-lg bg-[#604e42]/10 text-[#604e42] font-semibold hover:bg-[#604e42]/20 transition-colors"
+                    className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-[#604e42]/10 text-[#604e42] font-semibold hover:bg-[#604e42]/20 transition-colors text-sm sm:text-base"
                   >
-                    <Phone className="w-5 h-5" />
+                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
                     <span>06 79 62 39 42</span>
                   </a>
                   <div className="flex gap-2">
                     <a 
                       href="#histoire" 
-                      className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors text-center"
+                      className="flex-1 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors text-center"
                     >
                       Histoire
                     </a>
                     <a 
                       href="#recettes" 
-                      className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors text-center"
+                      className="flex-1 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors text-center"
                     >
                       Recettes
                     </a>
@@ -407,18 +408,18 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                           setOpenDropdown(openDropdown === item.id ? null : item.id);
                         }
                       }}
-                      className="w-full flex items-center justify-between px-4 py-3 text-left text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg font-semibold transition-all duration-200"
+                      className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 text-left text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg font-semibold transition-all duration-200 text-sm sm:text-base"
                     >
-                      {item.label}
+                      <span className="truncate">{item.label}</span>
                       {item.hasDropdown && (
                         <ChevronDown className={cn(
-                          "w-4 h-4 transition-transform duration-200",
+                          "w-4 h-4 flex-shrink-0 ml-2 transition-transform duration-200",
                           openDropdown === item.id && "rotate-180"
                         )} />
                       )}
                     </button>
                     {item.hasDropdown && item.subItems && openDropdown === item.id && (
-                      <div className="pl-4 space-y-1 mt-2">
+                      <div className="pl-3 sm:pl-4 space-y-1 mt-2">
                         {item.subItems.map((subItem) => (
                           <button
                             key={subItem.id}
@@ -429,7 +430,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                                 scrollToSection(subItem.id);
                               }
                             }}
-                            className="w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors"
+                            className="w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-600 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors"
                           >
                             {subItem.label}
                           </button>

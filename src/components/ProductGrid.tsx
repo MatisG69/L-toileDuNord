@@ -66,11 +66,11 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
       })();
 
   return (
-    <section id="produits" className="py-16 md:py-24 bg-white/90 backdrop-blur-sm">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <section id="produits" className="py-12 sm:py-16 md:py-20 lg:py-24 bg-white/90 backdrop-blur-sm">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 max-w-7xl">
         {/* Header cartoon moderne */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 md:mb-16"
           initial={{ opacity: 0, y: 30, scale: 0.9 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
@@ -81,7 +81,7 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
           }}
         >
           <motion.h2 
-            className="text-5xl md:text-6xl font-black text-gray-900 mb-4 tracking-tight"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-3 sm:mb-4 tracking-tight px-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -92,7 +92,7 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
             </span>
           </motion.h2>
           <motion.p 
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-2"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -104,7 +104,7 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
 
         {/* Filtres - Style cartoon moderne */}
         <motion.div
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10 sm:mb-12 md:mb-16 px-2"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -119,13 +119,14 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
               variant={selectedCategory === null ? "default" : "outline"}
               size="lg"
               className={cn(
-                "rounded-full transition-all duration-300 font-bold px-6 h-11 text-sm shadow-lg border-2",
+                "rounded-full transition-all duration-300 font-bold px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 text-xs sm:text-sm shadow-lg border-2",
                 selectedCategory === null 
                   ? "gradient-cartoon text-white hover:opacity-90 border-white/30 shadow-xl" 
                   : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300 hover:border-gray-400"
               )}
             >
-              ⭐ Produits vedettes
+              <span className="hidden sm:inline">⭐ Produits vedettes</span>
+              <span className="sm:hidden">⭐ Vedettes</span>
             </Button>
           </motion.div>
           {categories.length > 0 && categories.map((category, index) => (
@@ -143,7 +144,7 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
                 variant={selectedCategory === category.id ? "default" : "outline"}
                 size="lg"
                 className={cn(
-                  "rounded-full transition-all duration-300 font-bold px-6 h-11 text-sm shadow-lg border-2",
+                  "rounded-full transition-all duration-300 font-bold px-3 sm:px-4 md:px-6 h-9 sm:h-10 md:h-11 text-xs sm:text-sm shadow-lg border-2 whitespace-nowrap",
                   selectedCategory === category.id
                     ? "gradient-cartoon text-white hover:opacity-90 border-white/30 shadow-xl"
                     : "bg-white text-gray-700 hover:bg-gray-50 border-gray-300 hover:border-gray-400"
@@ -229,7 +230,7 @@ export function ProductGrid({ onViewAllClick }: ProductGridProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6 lg:gap-8"
             >
               {filteredProducts.map((product, index) => (
                 <ProductCard key={product.id} product={product} index={index} />

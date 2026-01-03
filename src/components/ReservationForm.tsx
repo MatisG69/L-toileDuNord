@@ -282,13 +282,13 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
   };
 
   return (
-    <section id="reservation" className="py-20 bg-white/90 backdrop-blur-sm">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+    <section id="reservation" className="py-12 sm:py-16 md:py-20 bg-white/90 backdrop-blur-sm">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6 max-w-4xl">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
             Réservez votre commande
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground px-2">
             Remplissez vos informations pour finaliser votre commande
           </p>
         </div>
@@ -436,12 +436,12 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
                 Remplissez les informations ci-dessous pour finaliser votre commande
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
+            <CardContent className="p-4 sm:p-6">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 {/* Informations personnelles */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Vos informations</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-base sm:text-lg font-semibold">Vos informations</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
                       <Label htmlFor="firstName">Prénom *</Label>
                       <Input
@@ -486,9 +486,9 @@ export function ReservationForm({ onSuccess }: ReservationFormProps) {
                 <Separator />
 
                 {/* Date et heure */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Date et heure de retrait</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-3 sm:space-y-4">
+                  <h3 className="text-base sm:text-lg font-semibold">Date et heure de retrait</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div className="space-y-2">
                       <Label className="flex items-center gap-2">
                         <CalendarIcon className="w-4 h-4" />

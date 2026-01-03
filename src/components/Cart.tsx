@@ -33,17 +33,17 @@ export function Cart({ isOpen, onClose, onCheckout }: CartProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col p-0">
-        <DialogHeader className="px-6 pt-6 pb-4">
-          <DialogTitle className="text-2xl">Votre Panier</DialogTitle>
-          <DialogDescription>
+      <DialogContent className="sm:max-w-[500px] max-h-[90vh] flex flex-col p-0 w-[95vw] sm:w-full">
+        <DialogHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-3 sm:pb-4">
+          <DialogTitle className="text-xl sm:text-2xl">Votre Panier</DialogTitle>
+          <DialogDescription className="text-sm">
             {items.length > 0 
               ? `${items.length} article${items.length > 1 ? 's' : ''} dans votre panier`
               : 'Votre panier est vide'}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto px-6 pb-6">
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-4 sm:pb-6">
           {items.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <ShoppingBag className="w-16 h-16 text-muted-foreground mb-4" />
@@ -63,14 +63,14 @@ export function Cart({ isOpen, onClose, onCheckout }: CartProps) {
                       <img
                         src={getProductImage(item.product.name, item.product.image_url)}
                         alt={item.product.name}
-                        className="w-20 h-20 object-cover rounded-lg"
+                        className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg flex-shrink-0"
                       />
 
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-base mb-1 truncate">
+                        <h3 className="font-semibold text-sm sm:text-base mb-1 truncate">
                           {item.product.name}
                         </h3>
-                        <p className="text-primary font-semibold text-sm mb-3">
+                        <p className="text-primary font-semibold text-xs sm:text-sm mb-2 sm:mb-3">
                           {item.product.price.toFixed(2)} € / {item.product.unit}
                         </p>
 
@@ -142,22 +142,22 @@ export function Cart({ isOpen, onClose, onCheckout }: CartProps) {
         {items.length > 0 && (
           <>
             <Separator />
-            <div className="px-6 pb-6 space-y-4">
+            <div className="px-4 sm:px-6 pb-4 sm:pb-6 space-y-3 sm:space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">Total</span>
-                <Badge variant="secondary" className="text-lg px-4 py-2">
+                <span className="text-base sm:text-lg font-semibold">Total</span>
+                <Badge variant="secondary" className="text-base sm:text-lg px-3 sm:px-4 py-1.5 sm:py-2">
                   {totalAmount.toFixed(2)} €
                 </Badge>
               </div>
 
               <Button
                 onClick={handleCheckout}
-                className="w-full"
+                className="w-full text-sm sm:text-base"
                 size="lg"
               >
                 Passer la commande
               </Button>
-              <p className="text-xs text-center text-muted-foreground">
+              <p className="text-xs text-center text-muted-foreground px-2">
                 Vous pourrez choisir le mode de paiement lors de la finalisation
               </p>
             </div>

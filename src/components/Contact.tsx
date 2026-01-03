@@ -4,21 +4,21 @@ import { Badge } from './ui/badge';
 
 export function Contact() {
   return (
-    <section id="contact" className="py-20 bg-white/90 backdrop-blur-sm">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <Badge variant="secondary" className="mb-4">
+    <section id="contact" className="py-12 sm:py-16 md:py-20 bg-white/90 backdrop-blur-sm">
+      <div className="container mx-auto px-3 sm:px-4 lg:px-6">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <Badge variant="secondary" className="mb-3 sm:mb-4 text-xs sm:text-sm">
             Contactez-nous
           </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 px-2">
             Venez nous rendre visite
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-sm sm:text-base md:text-lg text-muted-foreground px-2">
             Nous sommes là pour vous servir avec le sourire
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 max-w-6xl mx-auto">
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -91,7 +91,7 @@ export function Contact() {
           </div>
 
           <Card className="overflow-hidden p-0">
-            <div className="h-[500px] lg:h-full min-h-[500px] bg-muted rounded-lg overflow-hidden">
+            <div className="h-[300px] sm:h-[400px] md:h-[500px] lg:h-full min-h-[300px] bg-muted rounded-lg overflow-hidden">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2530.5!2d3.063589!3d50.636565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c2d579b3256e11%3A0x40af13e81641160!2s183%20Rue%20des%20Postes%2C%2059000%20Lille!5e0!3m2!1sfr!2sfr!4v1234567890"
                 width="100%"
