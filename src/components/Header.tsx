@@ -259,7 +259,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
               <div className="sm:hidden flex items-center gap-1">
                 <a 
                   href="tel:+33679623942" 
-                  className="p-1.5 rounded-lg hover:bg-[#604e42]/10 transition-colors"
+                  className="p-1.5 rounded-lg hover:bg-[#604e42]/10 transition-colors active:scale-95"
                   title="Appeler"
                 >
                   <Phone className="w-4 h-4 text-[#604e42]" />
@@ -268,9 +268,20 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                   variant="ghost"
                   size="icon"
                   onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                  className="hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all h-9 w-9"
+                  className="relative hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all h-9 w-9 group"
+                  aria-label="Menu"
                 >
-                  {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                  <motion.div
+                    className="absolute inset-0 flex items-center justify-center"
+                    animate={mobileMenuOpen ? { rotate: 180 } : { rotate: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {mobileMenuOpen ? (
+                      <X className="w-5 h-5 text-[#604e42]" />
+                    ) : (
+                      <Menu className="w-5 h-5" />
+                    )}
+                  </motion.div>
                 </Button>
               </div>
             </div>
@@ -361,84 +372,206 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
           </div>
         </nav>
 
-        {/* Menu mobile */}
+        {/* Overlay sombre pour le menu mobile */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="sm:hidden border-t border-gray-200 bg-white/98 backdrop-blur-sm overflow-hidden"
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 sm:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+
+        {/* Menu mobile - Slide depuis le haut */}
+        <AnimatePresence>
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ y: -100, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -100, opacity: 0 }}
+              transition={{ 
+                type: "spring",
+                stiffness: 300,
+                damping: 30
+              }}
+              className="fixed top-0 left-0 right-0 z-50 sm:hidden bg-white/98 backdrop-blur-xl border-b border-gray-200/80 shadow-2xl"
             >
-              <nav className="px-3 sm:px-4 py-3 sm:py-4 space-y-2 max-h-[80vh] overflow-y-auto">
-                {/* Téléphone et liens rapides dans le menu mobile */}
-                <div className="pb-3 sm:pb-4 border-b border-gray-200 space-y-2">
-                  <a 
-                    href="tel:+33679623942" 
-                    className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg bg-[#604e42]/10 text-[#604e42] font-semibold hover:bg-[#604e42]/20 transition-colors text-sm sm:text-base"
+              {/* Header du menu mobile */}
+              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/50">
+                <div className="flex items-center gap-2">
+                  <img 
+                    src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop&crop=center" 
+                    alt="Logo" 
+                    className="w-8 h-8 rounded-full object-cover border-2 border-[#604e42]/30"
+                  />
+                  <span className="text-sm font-bold text-gray-900">Menu</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="h-9 w-9 hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all"
+                  aria-label="Fermer le menu"
+                >
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+
+              {/* Contenu du menu */}
+              <nav className="px-4 py-4 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
+                {/* Téléphone et liens rapides */}
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="pb-4 mb-4 border-b border-gray-200/50 space-y-2"
+                >
+                  <motion.a
+                    href="tel:+33679623942"
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[#604e42]/10 to-[#604e42]/5 text-[#604e42] font-semibold hover:from-[#604e42]/20 hover:to-[#604e42]/10 transition-all shadow-sm active:shadow-none"
                   >
-                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
-                    <span>06 79 62 39 42</span>
-                  </a>
+                    <div className="w-10 h-10 rounded-full bg-[#604e42]/20 flex items-center justify-center">
+                      <Phone className="w-5 h-5" />
+                    </div>
+                    <span className="text-base">06 79 62 39 42</span>
+                  </motion.a>
                   <div className="flex gap-2">
-                    <a 
-                      href="#histoire" 
-                      className="flex-1 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors text-center"
+                    <motion.a
+                      href="#histoire"
+                      whileTap={{ scale: 0.98 }}
+                      className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-all text-center border border-gray-200/50 hover:border-[#604e42]/30"
                     >
                       Histoire
-                    </a>
-                    <a 
-                      href="#recettes" 
-                      className="flex-1 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors text-center"
+                    </motion.a>
+                    <motion.a
+                      href="#recettes"
+                      whileTap={{ scale: 0.98 }}
+                      className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-all text-center border border-gray-200/50 hover:border-[#604e42]/30"
                     >
                       Recettes
-                    </a>
+                    </motion.a>
                   </div>
-                </div>
+                </motion.div>
                 
-                {navItems.map((item) => (
-                  <div key={item.id}>
-                    <button
+                {/* Items de navigation */}
+                {navItems.map((item, index) => (
+                  <motion.div
+                    key={item.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.15 + index * 0.05 }}
+                  >
+                    <motion.button
+                      whileTap={{ scale: 0.98 }}
                       onClick={() => {
                         if (!item.hasDropdown) {
                           scrollToSection(item.id);
                           setActiveNav(item.id);
+                          setMobileMenuOpen(false);
                         } else {
                           setOpenDropdown(openDropdown === item.id ? null : item.id);
                         }
                       }}
-                      className="w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 text-left text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg font-semibold transition-all duration-200 text-sm sm:text-base"
+                      className={cn(
+                        "w-full flex items-center justify-between px-4 py-3.5 text-left text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-xl font-semibold transition-all duration-200 text-sm",
+                        activeNav === item.id && "bg-[#604e42]/10 text-[#604e42]"
+                      )}
                     >
                       <span className="truncate">{item.label}</span>
                       {item.hasDropdown && (
-                        <ChevronDown className={cn(
-                          "w-4 h-4 flex-shrink-0 ml-2 transition-transform duration-200",
-                          openDropdown === item.id && "rotate-180"
-                        )} />
+                        <motion.div
+                          animate={{ rotate: openDropdown === item.id ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <ChevronDown className="w-4 h-4 flex-shrink-0 ml-2 text-gray-400" />
+                        </motion.div>
                       )}
-                    </button>
-                    {item.hasDropdown && item.subItems && openDropdown === item.id && (
-                      <div className="pl-3 sm:pl-4 space-y-1 mt-2">
-                        {item.subItems.map((subItem) => (
-                          <button
-                            key={subItem.id}
-                            onClick={() => {
-                              if (subItem.action) {
-                                subItem.action();
-                              } else {
-                                scrollToSection(subItem.id);
-                              }
-                            }}
-                            className="w-full text-left px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-600 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-colors"
-                          >
-                            {subItem.label}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                    </motion.button>
+                    <AnimatePresence>
+                      {item.hasDropdown && item.subItems && openDropdown === item.id && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                          className="pl-4 space-y-1 mt-2 overflow-hidden"
+                        >
+                          {item.subItems.map((subItem, subIndex) => (
+                            <motion.button
+                              key={subItem.id}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: subIndex * 0.05 }}
+                              whileTap={{ scale: 0.98 }}
+                              onClick={() => {
+                                if (subItem.action) {
+                                  subItem.action();
+                                } else {
+                                  scrollToSection(subItem.id);
+                                }
+                                setMobileMenuOpen(false);
+                              }}
+                              className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-all flex items-center gap-2 group"
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-[#604e42] transition-colors"></span>
+                              {subItem.label}
+                            </motion.button>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
                 ))}
+
+                {/* Actions rapides en bas */}
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="pt-4 mt-4 border-t border-gray-200/50 space-y-2"
+                >
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      onAuthClick();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full justify-start gap-2 border-gray-200 hover:border-[#604e42]/30 hover:bg-[#604e42]/5"
+                  >
+                    {user ? (
+                      <>
+                        <LogOut className="w-4 h-4" />
+                        <span>Déconnexion</span>
+                      </>
+                    ) : (
+                      <>
+                        <User className="w-4 h-4" />
+                        <span>Connexion</span>
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      onCartClick();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full justify-start gap-2 border-gray-200 hover:border-[#604e42]/30 hover:bg-[#604e42]/5 relative"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    <span>Panier</span>
+                    {totalItems > 0 && (
+                      <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 text-xs font-bold bg-[#604e42] text-white">
+                        {totalItems > 9 ? '9+' : totalItems}
+                      </Badge>
+                    )}
+                  </Button>
+                </motion.div>
               </nav>
             </motion.div>
           )}
