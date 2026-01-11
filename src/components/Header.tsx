@@ -124,7 +124,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
   return (
     <>
       {/* Main header - Style moderne et élégant */}
-      <header className="bg-white/98 backdrop-blur-xl border-b border-gray-200/80 sticky top-0 z-50 shadow-md">
+      <header className="bg-white/95 backdrop-blur-xl border-b border-gray-200/80 sticky top-0 z-[100] shadow-lg">
         <div className="container mx-auto px-3 sm:px-4 py-2 sm:py-3">
           <div className="flex items-center justify-between gap-2 sm:gap-4">
             {/* Logo - Style moderne et élégant */}
