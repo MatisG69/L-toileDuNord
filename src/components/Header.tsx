@@ -32,6 +32,18 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeNav, setActiveNav] = useState<string>('');
 
+  // Bloquer le scroll quand le menu mobile est ouvert
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
   // Récupérer les catégories depuis la base de données
   useEffect(() => {
     async function fetchCategories() {
@@ -346,14 +358,22 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
         {/* Overlay sombre pour le menu mobile */}
         <AnimatePresence>
           {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 sm:hidden"
-              onClick={() => setMobileMenuOpen(false)}
-            />
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] sm:hidden"
+                onClick={() => setMobileMenuOpen(false)}
+              />
+              {/* Empêcher le scroll du body */}
+              <style>{`
+                body:has(.mobile-menu-open) {
+                  overflow: hidden;
+                }
+              `}</style>
+            </>
           )}
         </AnimatePresence>
 
@@ -369,7 +389,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                 stiffness: 300,
                 damping: 30
               }}
-              className="fixed top-0 left-0 right-0 z-50 sm:hidden bg-white/98 backdrop-blur-xl border-b border-gray-200/80 shadow-2xl"
+              className={`fixed top-0 left-0 right-0 z-[70] sm:hidden bg-white/98 backdrop-blur-xl border-b border-gray-200/80 shadow-2xl mobile-menu-open ${mobileMenuOpen ? 'mobile-menu-open' : ''}`}
             >
               {/* Header du menu mobile */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/50">
@@ -385,10 +405,10 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                   variant="ghost"
                   size="icon"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="h-9 w-9 hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all"
+                  className="h-10 w-10 sm:h-9 sm:w-9 hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all rounded-full"
                   aria-label="Fermer le menu"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-6 h-6 sm:w-5 sm:h-5" />
                 </Button>
               </div>
 

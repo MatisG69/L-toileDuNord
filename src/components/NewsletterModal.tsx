@@ -69,9 +69,9 @@ export function NewsletterModal({ isOpen, onClose }: NewsletterModalProps) {
           {/* Bouton fermer */}
           <button
             onClick={onClose}
-            className="absolute right-3 top-3 z-50 w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-all hover:scale-110"
+            className="absolute right-3 top-3 z-50 w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-all hover:scale-110 active:scale-95"
           >
-            <X className="w-4 h-4 text-gray-600" />
+            <X className="w-6 h-6 sm:w-4 sm:h-4 text-gray-600" />
           </button>
 
           {/* Header avec image de fond */}

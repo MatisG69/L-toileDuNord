@@ -83,6 +83,10 @@ export function AdminPage() {
 
   // Customers
   const [customers, setCustomers] = useState<Customer[]>([]);
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [customerOrders, setCustomerOrders] = useState<Order[]>([]);
+  const [customerOrdersModalOpen, setCustomerOrdersModalOpen] = useState(false);
+  const [loadingCustomerOrders, setLoadingCustomerOrders] = useState(false);
 
   // Stats
   const [dailyStats, setDailyStats] = useState<any[]>([]);
@@ -759,7 +763,37 @@ export function AdminPage() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.03 }}
-                          className="hover:bg-gray-50 transition-colors duration-150"
+                          className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
+                          onClick={async () => {
+                            setSelectedCustomer(customer);
+                            setCustomerOrdersModalOpen(true);
+                            setLoadingCustomerOrders(true);
+                            try {
+                              const { data, error } = await supabase
+                                .from('orders')
+                                .select(`
+                                  *,
+                                  order_items (
+                                    quantity,
+                                    unit_price,
+                                    subtotal,
+                                    products (
+                                      name,
+                                      unit
+                                    )
+                                  )
+                                `)
+                                .eq('customer_id', customer.id)
+                                .order('created_at', { ascending: false });
+                              
+                              if (error) throw error;
+                              setCustomerOrders(data || []);
+                            } catch (err) {
+                              console.error('Erreur lors de la récupération des commandes:', err);
+                            } finally {
+                              setLoadingCustomerOrders(false);
+                            }
+                          }}
                         >
                           <td className="px-6 py-4">
                             <span className="text-sm font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded">{order.id.substring(0, 8)}</span>
@@ -862,7 +896,37 @@ export function AdminPage() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.03 }}
-                          className="hover:bg-gray-50 transition-colors duration-150"
+                          className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
+                          onClick={async () => {
+                            setSelectedCustomer(customer);
+                            setCustomerOrdersModalOpen(true);
+                            setLoadingCustomerOrders(true);
+                            try {
+                              const { data, error } = await supabase
+                                .from('orders')
+                                .select(`
+                                  *,
+                                  order_items (
+                                    quantity,
+                                    unit_price,
+                                    subtotal,
+                                    products (
+                                      name,
+                                      unit
+                                    )
+                                  )
+                                `)
+                                .eq('customer_id', customer.id)
+                                .order('created_at', { ascending: false });
+                              
+                              if (error) throw error;
+                              setCustomerOrders(data || []);
+                            } catch (err) {
+                              console.error('Erreur lors de la récupération des commandes:', err);
+                            } finally {
+                              setLoadingCustomerOrders(false);
+                            }
+                          }}
                         >
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-3">
@@ -1227,6 +1291,107 @@ export function AdminPage() {
           </DialogContent>
         </Dialog>
         )}
+
+        {/* Modal des commandes du client */}
+        <Dialog open={customerOrdersModalOpen} onOpenChange={setCustomerOrdersModalOpen}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-2xl font-bold">
+                Commandes de {selectedCustomer?.full_name}
+              </DialogTitle>
+              <DialogDescription>
+                {selectedCustomer?.email}
+              </DialogDescription>
+            </DialogHeader>
+
+            {loadingCustomerOrders ? (
+              <div className="flex justify-center items-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#604e42]"></div>
+              </div>
+            ) : customerOrders.length === 0 ? (
+              <div className="text-center py-12">
+                <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600">Aucune commande pour ce client</p>
+              </div>
+            ) : (
+              <div className="space-y-4 mt-4">
+                {customerOrders.map((order: any) => (
+                  <Card key={order.id} className="border-2 border-gray-200">
+                    <CardHeader>
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <CardTitle className="text-lg">
+                            Commande #{order.id.substring(0, 8).toUpperCase()}
+                          </CardTitle>
+                          <CardDescription className="mt-1">
+                            {new Date(order.created_at).toLocaleDateString('fr-FR', {
+                              day: 'numeric',
+                              month: 'long',
+                              year: 'numeric',
+                              hour: '2-digit',
+                              minute: '2-digit'
+                            })}
+                          </CardDescription>
+                        </div>
+                        <div className="flex gap-2">
+                          <Badge variant={order.status === 'completed' ? 'default' : 'secondary'}>
+                            {order.status}
+                          </Badge>
+                          <Badge variant={order.payment_status === 'paid' ? 'default' : 'secondary'}>
+                            {order.payment_status}
+                          </Badge>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <span className="text-gray-600">Date de retrait:</span>
+                            <p className="font-semibold">
+                              {new Date(order.pickup_date).toLocaleDateString('fr-FR', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric'
+                              })} à {order.pickup_time}
+                            </p>
+                          </div>
+                          <div>
+                            <span className="text-gray-600">Paiement:</span>
+                            <p className="font-semibold">
+                              {order.payment_method === 'online' ? 'En ligne' : 'En magasin'}
+                            </p>
+                          </div>
+                        </div>
+                        {order.order_items && order.order_items.length > 0 && (
+                          <div>
+                            <h4 className="font-semibold mb-2">Produits:</h4>
+                            <div className="space-y-1">
+                              {order.order_items.map((item: any, idx: number) => (
+                                <div key={idx} className="flex justify-between text-sm">
+                                  <span>
+                                    {item.products.name} - {item.quantity} {item.products.unit}
+                                  </span>
+                                  <span className="font-semibold">{item.subtotal.toFixed(2)} €</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        <div className="pt-3 border-t flex justify-between items-center">
+                          <span className="font-semibold">Total:</span>
+                          <span className="text-xl font-bold text-[#604e42]">
+                            {order.total_amount.toFixed(2)} €
+                          </span>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

@@ -69,9 +69,9 @@ export function ProductModal({ product, isOpen, onClose }: ProductModalProps) {
               {/* Bouton fermer */}
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-50 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg hover:scale-110"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 w-10 h-10 sm:w-10 sm:h-10 rounded-full bg-white/95 backdrop-blur-sm flex items-center justify-center hover:bg-white transition-all shadow-lg hover:scale-110 active:scale-95"
               >
-                <X className="w-5 h-5 text-gray-700" />
+                <X className="w-6 h-6 sm:w-5 sm:h-5 text-gray-700" />
               </button>
 
               <div className="grid md:grid-cols-2 gap-0">
