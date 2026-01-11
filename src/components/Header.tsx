@@ -70,43 +70,14 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
     setMobileMenuOpen(false);
   };
 
-  // Navigation items style Maison Lascours
+  // Navigation items simplifiés
   const navItems: NavItem[] = [
-    { label: 'BONS PLANS', id: 'bons-plans' },
-    { label: 'DÉSTOCKAGE', id: 'destockage' },
-    { label: 'SÉLECTION HIVER', id: 'selection-hiver' },
-    { label: 'VIANDES D\'EXCEPTION', id: 'viandes-exception' },
-    { 
-      label: 'VIANDES', 
-      id: 'viandes',
-      hasDropdown: true,
-      subItems: categories.filter(cat => cat.name.toLowerCase().includes('viande') || cat.name.toLowerCase().includes('bœuf') || cat.name.toLowerCase().includes('agneau') || cat.name.toLowerCase().includes('veau')).map(cat => ({
-        label: cat.name,
-        id: cat.id,
-        action: () => handleCategoryClick(cat.name)
-      }))
-    },
-    { 
-      label: 'VOLAILLES', 
-      id: 'volailles',
-      hasDropdown: true,
-      subItems: categories.filter(cat => cat.name.toLowerCase().includes('volaille') || cat.name.toLowerCase().includes('poulet') || cat.name.toLowerCase().includes('dinde')).map(cat => ({
-        label: cat.name,
-        id: cat.id,
-        action: () => handleCategoryClick(cat.name)
-      }))
-    },
-    { 
-      label: 'SAUCISSES & CHARCUTERIES', 
-      id: 'charcuteries',
-      hasDropdown: true,
-      subItems: categories.filter(cat => cat.name.toLowerCase().includes('préparation') || cat.name.toLowerCase().includes('merguez') || cat.name.toLowerCase().includes('saucisse')).map(cat => ({
-        label: cat.name,
-        id: cat.id,
-        action: () => handleCategoryClick(cat.name)
-      }))
-    },
-    { label: 'ÉPICERIE & ACCESSOIRES', id: 'epicerie' },
+    { label: 'Accueil', id: 'accueil' },
+    { label: 'Nos viandes', id: 'produits' },
+    { label: 'À propos', id: 'services' },
+    { label: 'Réserver votre commande', id: 'reservation' },
+    { label: 'Mes commandes', id: 'mes-commandes' },
+    { label: 'Contact', id: 'contact' },
   ];
 
   // SVG Logo avec silhouettes de bovins (style Maison Lascours)

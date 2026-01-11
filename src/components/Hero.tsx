@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react';
 
 interface HeroProps {
   onProductsClick?: () => void;
+  onReservationClick?: () => void;
 }
 
-export function Hero({ onProductsClick }: HeroProps) {
+export function Hero({ onProductsClick, onReservationClick }: HeroProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -23,8 +24,12 @@ export function Hero({ onProductsClick }: HeroProps) {
   }, []);
 
   const scrollToReservation = () => {
-    const element = document.getElementById('reservation');
-    element?.scrollIntoView({ behavior: 'smooth' });
+    if (onReservationClick) {
+      onReservationClick();
+    } else {
+      const element = document.getElementById('reservation');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const scrollToProducts = () => {
