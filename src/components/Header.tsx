@@ -389,7 +389,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                 stiffness: 300,
                 damping: 30
               }}
-              className={`fixed top-0 left-0 right-0 z-[70] sm:hidden bg-white/98 backdrop-blur-xl border-b border-gray-200/80 shadow-2xl mobile-menu-open ${mobileMenuOpen ? 'mobile-menu-open' : ''}`}
+              className={`fixed top-0 left-0 right-0 z-[70] sm:hidden bg-white backdrop-blur-md border-b border-gray-200 shadow-2xl mobile-menu-open ${mobileMenuOpen ? 'mobile-menu-open' : ''}`}
             >
               {/* Header du menu mobile */}
               <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/50">
