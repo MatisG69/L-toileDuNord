@@ -392,57 +392,66 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
               className={`fixed top-0 left-0 right-0 z-[70] sm:hidden bg-white backdrop-blur-md border-b border-gray-200 shadow-2xl mobile-menu-open ${mobileMenuOpen ? 'mobile-menu-open' : ''}`}
             >
               {/* Header du menu mobile */}
-              <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/50">
-                <div className="flex items-center gap-2">
-                  <img 
-                    src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop&crop=center" 
-                    alt="Logo" 
-                    className="w-8 h-8 rounded-full object-cover border-2 border-[#604e42]/30"
-                  />
-                  <span className="text-sm font-bold text-gray-900">Menu</span>
+              <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 bg-gradient-to-r from-[#604e42]/5 to-transparent">
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <img 
+                      src="https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&fit=crop&crop=center" 
+                      alt="Logo" 
+                      className="w-10 h-10 rounded-full object-cover border-2 border-[#604e42]/40 shadow-md"
+                    />
+                    <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-base font-black text-gray-900 leading-tight">L'Étoile du Nord</span>
+                    <span className="text-xs text-gray-500 font-medium">Menu</span>
+                  </div>
                 </div>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="h-10 w-10 sm:h-9 sm:w-9 hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all rounded-full"
+                  className="h-11 w-11 hover:bg-[#604e42]/10 hover:text-[#604e42] transition-all rounded-full active:scale-95"
                   aria-label="Fermer le menu"
                 >
-                  <X className="w-6 h-6 sm:w-5 sm:h-5" />
+                  <X className="w-6 h-6" />
                 </Button>
               </div>
 
               {/* Contenu du menu */}
-              <nav className="px-4 py-4 space-y-1 max-h-[calc(100vh-80px)] overflow-y-auto">
+              <nav className="px-4 py-5 space-y-2 max-h-[calc(100vh-100px)] overflow-y-auto">
                 {/* Téléphone et liens rapides */}
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
-                  className="pb-4 mb-4 border-b border-gray-200/50 space-y-2"
+                  className="pb-5 mb-5 border-b border-gray-200 space-y-3"
                 >
                   <motion.a
                     href="tel:+33679623942"
-                    whileTap={{ scale: 0.98 }}
-                    className="flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[#604e42]/10 to-[#604e42]/5 text-[#604e42] font-semibold hover:from-[#604e42]/20 hover:to-[#604e42]/10 transition-all shadow-sm active:shadow-none"
+                    whileTap={{ scale: 0.97 }}
+                    className="flex items-center gap-4 px-5 py-4 rounded-2xl bg-gradient-to-r from-[#604e42] to-[#4d3e34] text-white font-bold shadow-lg hover:shadow-xl transition-all active:shadow-md"
                   >
-                    <div className="w-10 h-10 rounded-full bg-[#604e42]/20 flex items-center justify-center">
-                      <Phone className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                      <Phone className="w-6 h-6" />
                     </div>
-                    <span className="text-base">06 79 62 39 42</span>
+                    <div className="flex-1">
+                      <span className="text-lg block">06 79 62 39 42</span>
+                      <span className="text-xs text-white/80 font-normal">Appelez-nous</span>
+                    </div>
                   </motion.a>
-                  <div className="flex gap-2">
+                  <div className="flex gap-3">
                     <motion.a
                       href="#histoire"
-                      whileTap={{ scale: 0.98 }}
-                      className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-all text-center border border-gray-200/50 hover:border-[#604e42]/30"
+                      whileTap={{ scale: 0.97 }}
+                      className="flex-1 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-xl transition-all text-center border-2 border-gray-200 hover:border-[#604e42]/40 bg-gray-50"
                     >
                       Histoire
                     </motion.a>
                     <motion.a
                       href="#recettes"
-                      whileTap={{ scale: 0.98 }}
-                      className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-all text-center border border-gray-200/50 hover:border-[#604e42]/30"
+                      whileTap={{ scale: 0.97 }}
+                      className="flex-1 px-4 py-3 text-sm font-semibold text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-xl transition-all text-center border-2 border-gray-200 hover:border-[#604e42]/40 bg-gray-50"
                     >
                       Recettes
                     </motion.a>
@@ -458,7 +467,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                     transition={{ delay: 0.15 + index * 0.05 }}
                   >
                     <motion.button
-                      whileTap={{ scale: 0.98 }}
+                      whileTap={{ scale: 0.97 }}
                       onClick={() => {
                         if (!item.hasDropdown) {
                           scrollToSection(item.id);
@@ -469,8 +478,8 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                         }
                       }}
                       className={cn(
-                        "w-full flex items-center justify-between px-4 py-3.5 text-left text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-xl font-semibold transition-all duration-200 text-sm",
-                        activeNav === item.id && "bg-[#604e42]/10 text-[#604e42]"
+                        "w-full flex items-center justify-between px-5 py-4 text-left text-gray-800 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-xl font-bold transition-all duration-200 text-base border-2 border-transparent hover:border-[#604e42]/20",
+                        activeNav === item.id && "bg-gradient-to-r from-[#604e42]/15 to-[#604e42]/5 text-[#604e42] border-[#604e42]/30 shadow-sm"
                       )}
                     >
                       <span className="truncate">{item.label}</span>
@@ -479,7 +488,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                           animate={{ rotate: openDropdown === item.id ? 180 : 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <ChevronDown className="w-4 h-4 flex-shrink-0 ml-2 text-gray-400" />
+                          <ChevronDown className="w-5 h-5 flex-shrink-0 ml-2 text-gray-500" />
                         </motion.div>
                       )}
                     </motion.button>
@@ -498,7 +507,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: subIndex * 0.05 }}
-                              whileTap={{ scale: 0.98 }}
+                              whileTap={{ scale: 0.97 }}
                               onClick={() => {
                                 if (subItem.action) {
                                   subItem.action();
@@ -507,9 +516,9 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                                 }
                                 setMobileMenuOpen(false);
                               }}
-                              className="w-full text-left px-4 py-2.5 text-sm text-gray-600 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-lg transition-all flex items-center gap-2 group"
+                              className="w-full text-left px-5 py-3 text-sm text-gray-700 hover:bg-[#604e42]/10 hover:text-[#604e42] rounded-xl transition-all flex items-center gap-3 group font-medium"
                             >
-                              <span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-[#604e42] transition-colors"></span>
+                              <span className="w-2 h-2 rounded-full bg-gray-300 group-hover:bg-[#604e42] transition-colors flex-shrink-0"></span>
                               {subItem.label}
                             </motion.button>
                           ))}
@@ -524,7 +533,7 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  className="pt-4 mt-4 border-t border-gray-200/50 space-y-2"
+                  className="pt-5 mt-5 border-t-2 border-gray-200 space-y-3"
                 >
                   <Button
                     variant="outline"
@@ -532,16 +541,16 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                       onAuthClick();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full justify-start gap-2 border-gray-200 hover:border-[#604e42]/30 hover:bg-[#604e42]/5"
+                    className="w-full justify-start gap-3 border-2 border-gray-200 hover:border-[#604e42]/40 hover:bg-[#604e42]/5 py-4 text-base font-semibold rounded-xl"
                   >
                     {user ? (
                       <>
-                        <LogOut className="w-4 h-4" />
+                        <LogOut className="w-5 h-5" />
                         <span>Déconnexion</span>
                       </>
                     ) : (
                       <>
-                        <User className="w-4 h-4" />
+                        <User className="w-5 h-5" />
                         <span>Connexion</span>
                       </>
                     )}
@@ -552,12 +561,12 @@ export function Header({ onCartClick, onAuthClick, onProductsClick }: HeaderProp
                       onCartClick();
                       setMobileMenuOpen(false);
                     }}
-                    className="w-full justify-start gap-2 border-gray-200 hover:border-[#604e42]/30 hover:bg-[#604e42]/5 relative"
+                    className="w-full justify-start gap-3 border-2 border-gray-200 hover:border-[#604e42]/40 hover:bg-[#604e42]/5 relative py-4 text-base font-semibold rounded-xl"
                   >
-                    <ShoppingCart className="w-4 h-4" />
+                    <ShoppingCart className="w-5 h-5" />
                     <span>Panier</span>
                     {totalItems > 0 && (
-                      <Badge className="ml-auto h-5 w-5 flex items-center justify-center p-0 text-xs font-bold bg-[#604e42] text-white">
+                      <Badge className="ml-auto h-6 w-6 flex items-center justify-center p-0 text-xs font-bold bg-[#604e42] text-white rounded-full shadow-md">
                         {totalItems > 9 ? '9+' : totalItems}
                       </Badge>
                     )}
