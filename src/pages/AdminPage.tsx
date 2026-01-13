@@ -20,7 +20,9 @@ import {
   UserPlus,
   FileText,
   Image as ImageIcon,
-  Upload
+  Upload,
+  Menu,
+  X
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -87,6 +89,7 @@ export function AdminPage() {
   const [customerOrders, setCustomerOrders] = useState<Order[]>([]);
   const [customerOrdersModalOpen, setCustomerOrdersModalOpen] = useState(false);
   const [loadingCustomerOrders, setLoadingCustomerOrders] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Stats
   const [dailyStats, setDailyStats] = useState<any[]>([]);
@@ -353,8 +356,29 @@ export function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-50">
+      {/* Bouton menu mobile */}
+      <div className="lg:hidden fixed top-4 left-4 z-50">
+        <Button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="bg-[#604e42] hover:bg-[#4a3d33] text-white shadow-lg"
+          size="icon"
+        >
+          {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </Button>
+      </div>
+
+      {/* Overlay mobile */}
+      {mobileMenuOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black/50 z-40"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar moderne */}
-      <div className="fixed left-0 top-0 h-full w-72 bg-gradient-to-b from-[#604e42] to-[#4a3d33] shadow-2xl z-40 border-r border-[#604e42]/20">
+      <div className={`fixed left-0 top-0 h-full w-72 bg-gradient-to-b from-[#604e42] to-[#4a3d33] shadow-2xl z-40 border-r border-[#604e42]/20 transition-transform duration-300 ${
+        mobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}>
         <div className="p-6 border-b border-[#604e42]/30">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center">
@@ -381,7 +405,10 @@ export function AdminPage() {
             return (
               <motion.button
                 key={item.id}
-                onClick={() => setActiveTab(item.id as AdminTab)}
+                onClick={() => {
+                  setActiveTab(item.id as AdminTab);
+                  setMobileMenuOpen(false);
+                }}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.05 }}
@@ -400,7 +427,7 @@ export function AdminPage() {
                   />
                 )}
                 <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-white/70 group-hover:text-white'}`} />
-                <span className="font-semibold">{item.label}</span>
+                <span className="font-semibold text-sm sm:text-base">{item.label}</span>
               </motion.button>
             );
           })}
@@ -427,7 +454,7 @@ export function AdminPage() {
       </div>
 
       {/* Main Content */}
-      <div className="ml-72 p-8">
+      <div className="lg:ml-72 p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
         {/* Dashboard */}
         {activeTab === 'dashboard' && (
           <motion.div
@@ -437,11 +464,11 @@ export function AdminPage() {
             className="space-y-8"
           >
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">Dashboard</h2>
-              <p className="text-gray-600 text-lg">Vue d'ensemble de votre boucherie</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Dashboard</h2>
+              <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Vue d'ensemble de votre boucherie</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -549,10 +576,10 @@ export function AdminPage() {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-2">Gestion des Produits</h2>
-                <p className="text-gray-600 text-lg">Gérez votre stock de viandes</p>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Gestion des Produits</h2>
+                <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Gérez votre stock de viandes</p>
               </div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
@@ -571,7 +598,7 @@ export function AdminPage() {
                     });
                     setProductDialogOpen(true);
                   }}
-                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white shadow-lg"
+                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white shadow-lg w-full sm:w-auto"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Ajouter un produit
@@ -579,7 +606,7 @@ export function AdminPage() {
               </motion.div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {products.map((product, index) => (
                 <motion.div
                   key={product.id}
@@ -662,10 +689,10 @@ export function AdminPage() {
             transition={{ duration: 0.3 }}
             className="space-y-6"
           >
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
-                <h2 className="text-4xl font-bold text-gray-900 mb-2">Gestion des Catégories</h2>
-                <p className="text-gray-600 text-lg">Organisez vos produits par catégories</p>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Gestion des Catégories</h2>
+                <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Organisez vos produits par catégories</p>
               </div>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button 
@@ -678,7 +705,7 @@ export function AdminPage() {
                     });
                     setCategoryDialogOpen(true);
                   }}
-                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white shadow-lg"
+                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white shadow-lg w-full sm:w-auto"
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Ajouter une catégorie
@@ -686,7 +713,7 @@ export function AdminPage() {
               </motion.div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {categories.map((category, index) => (
                 <motion.div
                   key={category.id}
@@ -737,23 +764,24 @@ export function AdminPage() {
             className="space-y-6"
           >
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">Gestion des Commandes</h2>
-              <p className="text-gray-600 text-lg">Suivez et gérez toutes les commandes</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Gestion des Commandes</h2>
+              <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Suivez et gérez toutes les commandes</p>
             </div>
 
             <Card className="border-0 shadow-xl">
               <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="min-w-full inline-block align-middle">
+                    <table className="w-full min-w-[800px]">
                     <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
                       <tr>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">ID</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Client</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Montant</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Retrait</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Paiement</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Statut</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">ID</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Client</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Montant</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Retrait</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Paiement</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Statut</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -763,42 +791,12 @@ export function AdminPage() {
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.03 }}
-                          className="hover:bg-gray-50 transition-colors duration-150 cursor-pointer"
-                          onClick={async () => {
-                            setSelectedCustomer(customer);
-                            setCustomerOrdersModalOpen(true);
-                            setLoadingCustomerOrders(true);
-                            try {
-                              const { data, error } = await supabase
-                                .from('orders')
-                                .select(`
-                                  *,
-                                  order_items (
-                                    quantity,
-                                    unit_price,
-                                    subtotal,
-                                    products (
-                                      name,
-                                      unit
-                                    )
-                                  )
-                                `)
-                                .eq('customer_id', customer.id)
-                                .order('created_at', { ascending: false });
-                              
-                              if (error) throw error;
-                              setCustomerOrders(data || []);
-                            } catch (err) {
-                              console.error('Erreur lors de la récupération des commandes:', err);
-                            } finally {
-                              setLoadingCustomerOrders(false);
-                            }
-                          }}
+                          className="hover:bg-gray-50 transition-colors duration-150"
                         >
-                          <td className="px-6 py-4">
-                            <span className="text-sm font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded">{order.id.substring(0, 8)}</span>
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
+                            <span className="text-xs sm:text-sm font-mono text-gray-600 bg-gray-100 px-2 py-1 rounded">{order.id.substring(0, 8)}</span>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
                             <div>
                               <div className="font-semibold text-gray-900">
                                 {order.first_name && order.last_name
@@ -810,10 +808,10 @@ export function AdminPage() {
                               )}
                             </div>
                           </td>
-                          <td className="px-6 py-4">
-                            <span className="text-lg font-bold text-[#604e42]">{order.total_amount} €</span>
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
+                            <span className="text-base sm:text-lg font-bold text-[#604e42]">{order.total_amount} €</span>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
                             <div>
                               <div className="font-semibold text-gray-900">
                                 {new Date(order.pickup_date).toLocaleDateString('fr-FR', {
@@ -828,11 +826,11 @@ export function AdminPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
                             <div className="space-y-1">
                               <Badge 
                                 variant={order.payment_method === 'online' ? 'default' : 'secondary'} 
-                                className={order.payment_method === 'online' ? 'bg-blue-500' : 'bg-gray-500'}
+                                className={`text-xs ${order.payment_method === 'online' ? 'bg-blue-500' : 'bg-gray-500'}`}
                               >
                                 {order.payment_method === 'online' ? 'En ligne' : 'En magasin'}
                               </Badge>
@@ -841,28 +839,29 @@ export function AdminPage() {
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
                             <Badge 
                               variant={order.status === 'completed' ? 'default' : 'secondary'}
-                              className={order.status === 'completed' ? 'bg-green-500' : order.status === 'pending' ? 'bg-yellow-500' : 'bg-gray-500'}
+                              className={`text-xs ${order.status === 'completed' ? 'bg-green-500' : order.status === 'pending' ? 'bg-yellow-500' : 'bg-gray-500'}`}
                             >
                               {order.status}
                             </Badge>
                           </td>
-                          <td className="px-6 py-4">
-                            <Button variant="outline" size="sm" className="hover:bg-[#604e42] hover:text-white">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
+                            <Button variant="outline" size="sm" className="hover:bg-[#604e42] hover:text-white h-8 w-8 p-0">
                               <Eye className="w-4 h-4" />
                             </Button>
                           </td>
                         </motion.tr>
                       ))}
                     </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
         {/* Customers Management */}
         {activeTab === 'customers' && (
@@ -873,20 +872,21 @@ export function AdminPage() {
             className="space-y-6"
           >
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">Gestion des Clients</h2>
-              <p className="text-gray-600 text-lg">Liste de tous les clients inscrits</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Gestion des Clients</h2>
+              <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Liste de tous les clients inscrits</p>
             </div>
 
             <Card className="border-0 shadow-xl">
               <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
+                <div className="overflow-x-auto -mx-4 sm:mx-0">
+                  <div className="min-w-full inline-block align-middle">
+                    <table className="w-full min-w-[600px]">
                     <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
                       <tr>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Nom</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Téléphone</th>
-                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Inscription</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Nom</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Email</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Téléphone</th>
+                        <th className="px-3 sm:px-6 py-3 sm:py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Inscription</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100 bg-white">
@@ -928,17 +928,17 @@ export function AdminPage() {
                             }
                           }}
                         >
-                          <td className="px-6 py-4">
-                            <div className="flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#604e42] to-[#4a3d33] flex items-center justify-center text-white font-semibold shadow-md">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4">
+                            <div className="flex items-center gap-2 sm:gap-3">
+                              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-[#604e42] to-[#4a3d33] flex items-center justify-center text-white font-semibold shadow-md text-xs sm:text-sm">
                                 {customer.full_name.charAt(0).toUpperCase()}
                               </div>
-                              <span className="font-semibold text-gray-900">{customer.full_name}</span>
+                              <span className="font-semibold text-gray-900 text-sm sm:text-base">{customer.full_name}</span>
                             </div>
                           </td>
-                          <td className="px-6 py-4 text-sm text-gray-700">{customer.email}</td>
-                          <td className="px-6 py-4 text-sm text-gray-700">{customer.phone || <span className="text-gray-400">-</span>}</td>
-                          <td className="px-6 py-4 text-sm text-gray-600">
+                          <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-700 break-all">{customer.email}</td>
+                          <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-700">{customer.phone || <span className="text-gray-400">-</span>}</td>
+                          <td className="px-3 sm:px-6 py-3 sm:py-4 text-xs sm:text-sm text-gray-600">
                             {new Date(customer.created_at).toLocaleDateString('fr-FR', {
                               day: 'numeric',
                               month: 'long',
@@ -948,12 +948,13 @@ export function AdminPage() {
                         </motion.tr>
                       ))}
                     </tbody>
-                  </table>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
+                      </table>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          )}
 
         {/* Statistics */}
         {activeTab === 'stats' && (
@@ -964,11 +965,11 @@ export function AdminPage() {
             className="space-y-6"
           >
             <div>
-              <h2 className="text-4xl font-bold text-gray-900 mb-2">Statistiques du Site</h2>
-              <p className="text-gray-600 text-lg">Analysez le trafic et les performances</p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">Statistiques du Site</h2>
+              <p className="text-gray-600 text-sm sm:text-base lg:text-lg">Analysez le trafic et les performances</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -1055,18 +1056,18 @@ export function AdminPage() {
         {/* Product Dialog */}
         {productDialogOpen && (
           <Dialog open={productDialogOpen} onOpenChange={setProductDialogOpen}>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto border-0 shadow-2xl">
+            <DialogContent className="max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto border-0 shadow-2xl w-[95vw] sm:w-full m-0 sm:m-4 rounded-none sm:rounded-lg">
               <DialogHeader className="pb-4 border-b border-gray-200">
-                <DialogTitle className="text-2xl font-bold text-gray-900">
+                <DialogTitle className="text-xl sm:text-2xl font-bold text-gray-900">
                   {editingProduct ? 'Modifier le produit' : 'Nouveau produit'}
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 mt-1">
+                <DialogDescription className="text-gray-600 mt-1 text-sm sm:text-base">
                   Remplissez les informations pour {editingProduct ? 'modifier' : 'ajouter'} un produit
                 </DialogDescription>
               </DialogHeader>
 
             <form onSubmit={handleProductSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Nom du produit *</Label>
                   <Input
@@ -1092,7 +1093,7 @@ export function AdminPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="unit">Unité</Label>
                   <Select value={productForm.unit} onValueChange={(value) => setProductForm({ ...productForm, unit: value })}>
@@ -1194,18 +1195,18 @@ export function AdminPage() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-6 border-t border-gray-200">
                 <Button 
                   type="button" 
                   variant="outline" 
                   onClick={() => setProductDialogOpen(false)}
-                  className="px-6"
+                  className="px-6 w-full sm:w-auto"
                 >
                   Annuler
                 </Button>
                 <Button 
                   type="submit"
-                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white px-6 shadow-lg"
+                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white px-6 shadow-lg w-full sm:w-auto"
                 >
                   {editingProduct ? 'Modifier' : 'Ajouter'} le produit
                 </Button>
@@ -1218,12 +1219,12 @@ export function AdminPage() {
         {/* Category Dialog */}
         {categoryDialogOpen && (
           <Dialog open={categoryDialogOpen} onOpenChange={setCategoryDialogOpen}>
-            <DialogContent className="max-w-2xl border-0 shadow-2xl">
+            <DialogContent className="max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto border-0 shadow-2xl w-[95vw] sm:w-full m-0 sm:m-4 rounded-none sm:rounded-lg">
               <DialogHeader className="pb-4 border-b border-gray-200">
-                <DialogTitle className="text-2xl font-bold text-gray-900">
+                <DialogTitle className="text-xl sm:text-2xl font-bold text-gray-900">
                   {editingCategory ? 'Modifier la catégorie' : 'Nouvelle catégorie'}
                 </DialogTitle>
-                <DialogDescription className="text-gray-600 mt-1">
+                <DialogDescription className="text-gray-600 mt-1 text-sm sm:text-base">
                   Remplissez les informations pour {editingCategory ? 'modifier' : 'ajouter'} une catégorie
                 </DialogDescription>
               </DialogHeader>
@@ -1271,18 +1272,18 @@ export function AdminPage() {
                 </div>
               </div>
 
-              <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
+              <div className="flex flex-col sm:flex-row justify-end gap-3 sm:gap-4 pt-6 border-t border-gray-200">
                 <Button 
                   type="button" 
                   variant="outline" 
                   onClick={() => setCategoryDialogOpen(false)}
-                  className="px-6"
+                  className="px-6 w-full sm:w-auto"
                 >
                   Annuler
                 </Button>
                 <Button 
                   type="submit"
-                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white px-6 shadow-lg"
+                  className="bg-[#604e42] hover:bg-[#4a3d33] text-white px-6 shadow-lg w-full sm:w-auto"
                 >
                   {editingCategory ? 'Modifier' : 'Ajouter'} la catégorie
                 </Button>
@@ -1294,12 +1295,12 @@ export function AdminPage() {
 
         {/* Modal des commandes du client */}
         <Dialog open={customerOrdersModalOpen} onOpenChange={setCustomerOrdersModalOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogContent className="max-w-4xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto w-[95vw] sm:w-full m-0 sm:m-4 rounded-none sm:rounded-lg">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">
+              <DialogTitle className="text-xl sm:text-2xl font-bold">
                 Commandes de {selectedCustomer?.full_name}
               </DialogTitle>
-              <DialogDescription>
+              <DialogDescription className="text-sm sm:text-base">
                 {selectedCustomer?.email}
               </DialogDescription>
             </DialogHeader>
@@ -1345,7 +1346,7 @@ export function AdminPage() {
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-3">
-                        <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                           <div>
                             <span className="text-gray-600">Date de retrait:</span>
                             <p className="font-semibold">
